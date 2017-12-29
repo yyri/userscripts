@@ -1,0 +1,5 @@
+//These steps tested in CHROME only.
+1. install tampermonkey for CHROME. http://tampermonkey.net/changelog.php?version=4.4&ext=dhdg
+2. click tampermonkey and choose "add new script", a new tab will be open.
+3. replace the default text in the tab with content in jieyueoa.user.script into it and save.
+4. ok and open oa.jieyuechina.com and try again.

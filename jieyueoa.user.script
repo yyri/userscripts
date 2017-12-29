@@ -1,0 +1,49 @@
+// ==UserScript==
+// @name JieyueOA Attendence
+// @namespace JieyueOA-Attendence
+// @include https://oa.jieyuechina.com/km/attendance/*
+// @version 0.1
+// ==/UserScript==
+
+function ChangeLocation(){
+    //alert("Changing JieyueOA URL to " + document.location.href.replace("/kmAttendanceMain.do?method=view&type=self", "/kmAttendanceMain.do?method=view&type=admin"));
+    if(document.location.href.indexOf("kmAttendanceMain.do?method=view&type=self")>0){
+        document.location.replace(document.location.href.replace("/kmAttendanceMain.do?method=view&type=self", "/kmAttendanceMain.do?method=view&type=admin"));
+     }else if(document.location.href.indexOf("kmAttendanceMain.do?method=view&type=admin")>0){
+         DisplayDiv();
+     }
+}
+
+function DisplayDiv(){
+    if(document.location.href.indexOf("kmAttendanceMain.do?method=view&type=admin")>0){
+        //alert("DisplayDiv");
+        //<div class="lui_tabpage_float_nav_item_c">¿¼ÇÚ¼ÇÂ¼ÁÐ±í</div>
+        //alert(document.querySelectorAll("div.lui_tabpage_float_nav_item_c").length);
+        var attendenceListDiv = document.querySelectorAll('div.lui_tabpage_float_content');
+        //alert(attendenceListDiv.length);
+        if(attendenceListDiv.length>0 && attendenceListDiv[0].style.display != "block"){
+            //alert("changing style to block");
+            attendenceListDiv[0].style.display="block";
+        }else{
+            //alert("changing style failed.set timeout.");
+            window.setTimeout(DisplayDiv, 200);
+        }
+    }
+}
+
+function ChangeURL(){
+    var aels = document.querySelectorAll('a[href^="kmAttendanceMain.do?method=view&type=self&*"]'); // links whose href end with "?type=self"
+    alert(aels.length + "URLs found.");
+    for (i=0; i<aels.length;i++) {
+        if (i === 0) {
+            alert(aels[i].href);
+         }
+        //aels[i].href = aels[i].href.substr(aels[i].href.indexOf("type=self")+4); // replace href with what follows "url="
+        aels[i].href = aels[i].href.replace("type=self","type=admin"); // replace href with what follows "url="
+    }
+}
+
+window.setTimeout(ChangeLocation, 0); // run after 1 second delay
+//window.setTimeout(DisplayDiv, 1000); // run after 1 second delay
+//window.onLoad(DisplayDiv);
+
